@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Start a Project | Shreya</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #0e141b;
+  color: white;
+}
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 8%;
+  background: rgba(14, 20, 27, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+nav h2 span { color: #ff6b4a; }
+
+nav a {
+  color: #ddd;
+  text-decoration: none;
+  margin-left: 30px;
+}
+
+nav a:hover { color: white; }
+
+/* MAIN SECTION */
+.main {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 8%;
+}
+
+.form-box {
+  background: #121a23;
+  padding: 40px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.form-box h1 {
+  margin-bottom: 10px;
+}
+
+.form-box p {
+  color: #bbb;
+  margin-bottom: 30px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+  background: #1c2530;
+  color: white;
+}
+
+textarea {
+  resize: none;
+  height: 120px;
+}
+
+button {
+  padding: 12px 25px;
+  background: #ff6b4a;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.success {
+  display: none;
+  margin-top: 15px;
+  color: #4caf50;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <h2>Shreya<span>.</span></h2>
+  <div>
+    <a href="index.html">Home</a>
+  </div>
+</nav>
+
+<section class="main">
+  <div class="form-box">
+    <h1>Start a Project</h1>
+    <p>Tell me about your idea and I’ll get back to you.</p>
+
+    <form id="projectForm">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Project Description" required></textarea>
+      <button type="submit">Send Request</button>
+      <div class="success">Message sent! I will contact you soon.</div>
+    </form>
+  </div>
+</section>
+
+<script>
+document.getElementById("projectForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const name = this.querySelector('input[type="text"]').value;
+  const email = this.querySelector('input[type="email"]').value;
+  const message = this.querySelector("textarea").value;
+
+  const res = await fetch("http://10.162.215.79:5000/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, message })
+  });
+
+  const data = await res.json();
+  if (data.success) {
+    alert("Message sent!");
+    this.reset();
+  } else {
+    alert("Error sending message.");
+  }
+});
+</script>
+
+
+</body>
+</html>
