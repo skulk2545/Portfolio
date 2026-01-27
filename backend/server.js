@@ -3,7 +3,8 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 app.post("/send", async (req, res) => {
@@ -13,24 +14,24 @@ app.post("/send", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "kshreya0725@gmail.com",
-        pass: "jlwj ufnh uxle pplz"
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
-      
     });
-    
 
     await transporter.sendMail({
-      from: email,
-      to: "kshreya0725@gmail.com",
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
       subject: "New Project Inquiry",
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
     });
 
     res.status(200).json({ success: true });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ success: false });
   }
 });
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log("Server running"));
