@@ -7,125 +7,109 @@
 
 <style>
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-  background: #0e141b;
+  background: linear-gradient(135deg, #0e141b, #141f2b);
   color: white;
-}
-
-/* NAV */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 8%;
-  background: rgba(14, 20, 27, 0.75);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-nav h2 span { color: #ff6b4a; }
-
-nav a {
-  color: #ddd;
-  text-decoration: none;
-  margin-left: 30px;
-}
-
-nav a:hover { color: white; }
-
-/* MAIN SECTION */
-.main {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 60px 8%;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-.form-box {
+.form-container {
   background: #121a23;
-  padding: 40px;
-  border-radius: 10px;
+  padding: 35px;
+  border-radius: 12px;
   width: 100%;
-  max-width: 600px;
+  max-width: 420px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
-.form-box h1 {
+.form-container h2 {
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
-.form-box p {
+.form-container p {
+  margin-bottom: 25px;
   color: #bbb;
-  margin-bottom: 30px;
+  font-size: 14px;
 }
 
 input, textarea {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: none;
   background: #1c2530;
   color: white;
+  font-size: 14px;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #888;
 }
 
 textarea {
   resize: none;
-  height: 120px;
+  height: 110px;
 }
 
 button {
-  padding: 12px 25px;
-  background: #ff6b4a;
-  border: none;
-  border-radius: 5px;
+  padding: 12px;
+  width: 100%;
+  background: linear-gradient(90deg, #e74aff, #9b59ff);
   color: white;
+  border: none;
+  border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 button:hover {
   transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 .success {
-  display: none;
   margin-top: 15px;
   color: #4caf50;
+  display: none;
+  font-size: 14px;
+}
+
+@media(max-width: 480px) {
+  .form-container {
+    padding: 25px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <h2>Shreya<span>.</span></h2>
-  <div>
-    <a href="index.html">Home</a>
-  </div>
-</nav>
+<div class="form-container">
+  <h2>Start a Project</h2>
+  <p>Tell me about your idea and I’ll get back to you.</p>
 
-<section class="main">
-  <div class="form-box">
-    <h1>Start a Project</h1>
-    <p>Tell me about your idea and I’ll get back to you.</p>
-
-    <form id="projectForm">
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Project Description" required></textarea>
-      <button type="submit">Send Request</button>
-      <div class="success">Message sent! I will contact you soon.</div>
-    </form>
-  </div>
-</section>
+  <form id="projectForm">
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Your Email" required>
+    <input type="tel" placeholder="Mobile Number" pattern="[0-9]{10}" required>
+    <textarea placeholder="Project Description" required></textarea>
+    <button type="submit">Send Request</button>
+    <div class="success" id="successMsg">Message sent! I'll contact you soon.</div>
+  </form>
+</div>
 
 <script>
 document.getElementById("projectForm").addEventListener("submit", async function(e) {
@@ -133,24 +117,31 @@ document.getElementById("projectForm").addEventListener("submit", async function
 
   const name = this.querySelector('input[type="text"]').value;
   const email = this.querySelector('input[type="email"]').value;
+  const phone = this.querySelector('input[type="tel"]').value;
   const message = this.querySelector("textarea").value;
 
-  const res = await fetch("http://10.162.215.79:5000/send", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, message })
-  });
+  try {
+    const res = await fetch("https://portfolio-backend-1-4fro.onrender.com/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, phone, message })
+    });
 
-  const data = await res.json();
-  if (data.success) {
-    alert("Message sent!");
-    this.reset();
-  } else {
-    alert("Error sending message.");
+    const data = await res.json();
+
+    if (data.success) {
+      document.getElementById("successMsg").style.display = "block";
+      this.reset();
+    } else {
+      alert("Server error: " + data.error);
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Network error.");
   }
 });
 </script>
-
 
 </body>
 </html>
