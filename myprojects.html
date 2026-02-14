@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Projects | Shreya</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #0e141b;
+  color: white;
+}
+
+/* ===== NAV ===== */
+nav {
+  padding: 22px 8%;
+  background: rgba(14,20,27,0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+nav a {
+  color: #ae4aff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ===== PAGE ===== */
+section {
+  padding: 70px 8%;
+}
+
+h1 {
+  color: #ae4aff;
+  margin-bottom: 40px;
+  font-size: 2.4rem;
+}
+
+/* ===== PROJECT CARDS ===== */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.project {
+  background: #121a23;
+  padding: 25px;
+  border-radius: 10px;
+  transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.project:hover {
+  transform: translateY(-6px);
+  border-color: #ae4aff;
+}
+
+.project h3 {
+  margin-bottom: 12px;
+}
+
+.project p {
+  color: #bbb;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.project a {
+  display: inline-block;
+  margin-right: 12px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.demo {
+  background: #ae4aff;
+  color: white;
+}
+
+.code {
+  border: 1px solid #ae4aff;
+  color: white;
+}
+
+.project a:hover {
+  opacity: 0.85;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a href="index.html">← Back to Home</a>
+</nav>
+
+<section>
+  <h1>My Projects</h1>
+
+  <div class="projects">
+
+    <div class="project">
+      <h3>Resume Analyzer & Generator</h3>
+      <p>
+        Web application that analyzes resumes using NLP and rule-based logic,
+        then generates optimized, ATS-friendly resumes.
+      </p>
+      <a href="#" class="demo">Live Demo</a>
+      <a href="#" class="code">Source Code</a>
+    </div>
+
+    <div class="project">
+      <h3>Farmer Chatbot App</h3>
+      <p>
+        AI-powered mobile app built with React Native to assist farmers
+        with crop guidance, farming queries, and decision support.
+      </p>
+      <a href="#" class="demo">Live Demo</a>
+      <a href="#" class="code">Source Code</a>
+    </div>
+
+    <div class="project">
+      <h3>Fake News Detection System</h3>
+      <p>
+        Python-based NLP system that scrapes news articles and predicts
+        authenticity using machine learning models.
+      </p>
+      <a href="#" class="demo">Live Demo</a>
+      <a href="#" class="code">Source Code</a>
+    </div>
+
+    <div class="project">
+      <h3>Flutter Tiffin Service App</h3>
+      <p>
+        Mobile application for food ordering with category filtering,
+        time-based availability, and token-based pickup system.
+      </p>
+      <a href="#" class="demo">Live Demo</a>
+      <a href="#" class="code">Source Code</a>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>
